@@ -1,6 +1,10 @@
 [gd_resource type="NoiseTexture2D" load_steps=2 format=3 uid="uid://bok1i4hhop0o2"]
 
 [sub_resource type="FastNoiseLite" id="1"]
+frequency = 0.00850340
+fractal_octaves = 2
+fractal_gain = 0.184
+fractal_lacunarity = 2.86
 
 [resource]
 width = 1024

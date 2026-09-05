@@ -1,57 +1,52 @@
 extends Node2D
 
+# Emitted once the cull animation has finished, so the parent can wait for a
+# batch of drawers without owning their tweens.
+signal culled
+
 var vertex_positions := []
 
 var length := 0.0
 var color_mod := 1.0
 var culled_color: Color
-var tween: Tween
 var cull: bool
 var will_cull: bool
 
 
-func setup(_tween: Tween, _vertex_positions: Array, _will_cull: bool) -> void:
+func setup(_vertex_positions: Array, _will_cull: bool) -> void:
 	vertex_positions = _vertex_positions
 	will_cull = _will_cull
 
-	tween = _tween
-
 
 func do_draw(anim_time: float) -> void:
-	#warning-ignore: return_value_discarded
-	tween.interpolate_method(self, "_do_draw_update", 0, 1, anim_time, 0, 2, anim_time)
-	#warning-ignore: return_value_discarded
-	tween.start()
-	await tween.tween_all_completed
+	var tween := create_tween()
+	tween.tween_method(_do_draw_update, 0.0, 1.0, anim_time).set_delay(anim_time)
+	await tween.finished
 
 
 func do_cull() -> void:
 	cull = true
-	#warning-ignore: return_value_discarded
-	tween.interpolate_method(self, "_do_cull_color_update", Color.SKY_BLUE, Color.RED, 1)
-	#warning-ignore: return_value_discarded
-	tween.start()
-	await tween.tween_all_completed
-	#warning-ignore: return_value_discarded
-	tween.interpolate_method(self, "_do_cull_update", 1, 0, 1)
-	#warning-ignore: return_value_discarded
-	tween.start()
-	await tween.tween_all_completed
+	# Sequential by default in Godot 4: the colour shift runs, then the fade.
+	var tween := create_tween()
+	tween.tween_method(_do_cull_color_update, Color.SKY_BLUE, Color.RED, 1.0)
+	tween.tween_method(_do_cull_update, 1.0, 0.0, 1.0)
+	await tween.finished
+	culled.emit()
 
 
 func _do_draw_update(value: float) -> void:
 	length = value
-	update()
+	queue_redraw()
 
 
 func _do_cull_color_update(value: Color) -> void:
 	culled_color = value
-	update()
+	queue_redraw()
 
 
 func _do_cull_update(value: float) -> void:
 	color_mod = value
-	update()
+	queue_redraw()
 
 
 func _draw() -> void:

@@ -18,6 +18,9 @@ colors = PackedColorArray(0.054902, 0.556863, 0.439216, 1, 0.321569, 0.890196, 0
 gradient = SubResource("3")
 
 [sub_resource type="FastNoiseLite" id="5"]
+frequency = 0.00916590
+fractal_gain = 0.138
+fractal_lacunarity = 0.44
 
 [sub_resource type="NoiseTexture2D" id="6"]
 seamless = true

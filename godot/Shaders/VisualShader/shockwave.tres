@@ -31,7 +31,7 @@ operator = 3
 function = 18
 
 [sub_resource type="VisualShaderNodeFloatParameter" id=11]
-uniform_name = "radius"
+parameter_name = "radius"
 
 [sub_resource type="VisualShaderNodeFloatOp" id=12]
 operator = 5
@@ -52,7 +52,7 @@ function = 5
 input_name = "screen_uv"
 
 [sub_resource type="VisualShaderNodeFloatParameter" id=18]
-uniform_name = "hardness"
+parameter_name = "hardness"
 
 [sub_resource type="VisualShaderNodeVectorOp" id=19]
 operator = 2
@@ -67,19 +67,19 @@ default_input_values = [ 0, 0.0, 1, 1.0 ]
 operator = 2
 
 [sub_resource type="VisualShaderNodeVec3Parameter" id=23]
-uniform_name = "center"
+parameter_name = "center"
 
 [sub_resource type="VisualShaderNodeVec3Parameter" id=24]
-uniform_name = "size"
+parameter_name = "size"
 
 [sub_resource type="VisualShaderNodeFloatParameter" id=25]
-uniform_name = "invert"
+parameter_name = "invert"
 
 [sub_resource type="VisualShaderNodeFloatParameter" id=26]
-uniform_name = "thickness"
+parameter_name = "thickness"
 
 [sub_resource type="VisualShaderNodeFloatParameter" id=27]
-uniform_name = "displacement_amount"
+parameter_name = "displacement_amount"
 
 [resource]
 code = "shader_type canvas_item;

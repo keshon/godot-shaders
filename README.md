@@ -1,4 +1,61 @@
-**/!\ WARNING:** This project is in the process of being ported to Godot 4. If you want get a copy of the working project for Godot 3, [head to the last Godot 3 release](https://github.com/gdquest-demos/godot-shaders/releases/tag/1.0.0). If you want to help, see [Tracker and guide: Update to Godot 4.3](https://github.com/gdquest-demos/godot-shaders/issues/53).
+# Godot Shaders — maintained fork
+
+> A fork of [gdquest-demos/godot-shaders](https://github.com/gdquest-demos/godot-shaders),
+> maintained by **Señor Mega** and **Claude**, who knows nothing about Godot.
+
+**Status:** runs on **Godot 4.7**. All 39 demos load and render.
+
+Upstream stopped part-way through its Godot 3 → 4 port, and the demos have not
+worked since. This fork finishes the port.
+
+Most of the damage was never visible as an error. The conversion made the
+structural changes correctly and then discarded data in silence: every
+`shader_param` in the project, 44 sprite textures, every bezier animation key,
+and the contents of every sky material. Nothing logs a warning when a shader
+runs on default values or a sky renders as Godot's built-in grey — it simply
+looks wrong, and only if you know what it used to look like.
+
+Restored values were recovered from the last pre-port revision rather than
+invented, so the demos match their original design instead of a plausible guess.
+
+## Running the tests
+
+Both scripts exit non-zero on failure and need nothing beyond Godot:
+
+```bash
+# static checks: no GPU required
+godot --headless --path godot --script res://tests/static_checks.gd
+
+# render checks: needs a real driver, --headless draws nothing
+godot --path godot --rendering-driver opengl3 --script res://tests/render_checks.gd
+```
+
+`static_checks.gd` verifies that every scene, resource and shader loads, that
+every referenced path exists, and that **every property name is one Godot still
+knows**. That last check is what catches an engine upgrade: a renamed property
+does not error, it is dropped silently and the feature it controlled stops
+working.
+
+`render_checks.gd` renders every demo and fails if the frame is flat — a black
+or blank screen — or if it drifts from an approved golden image.
+
+Both run in CI on every pull request. See [`godot/tests/`](godot/tests/README.md)
+for details and for how to add golden images.
+
+## How this fork is maintained
+
+The port was done with AI assistance (Claude Code). The first attempt passed
+"39 demos render, zero errors" while every 3D demo was quietly drawing the wrong
+sky — which is exactly why the checks above exist and why golden images only
+count once a human has looked at them.
+
+Treat the tests as the guard rail, not as proof. They catch regressions against
+a reference; they cannot tell you a shader still teaches what it is meant to
+teach.
+
+---
+
+*Everything below is the original GDQuest README.*
 
 # Godot Shaders
 

@@ -1,0 +1,73 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  GODOT_VERSION: 4.7.1
+
+jobs:
+  static:
+    name: Static checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Godot
+        run: |
+          wget -q "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q "Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          sudo mv "Godot_v${GODOT_VERSION}-stable_linux.x86_64" /usr/local/bin/godot
+          sudo chmod +x /usr/local/bin/godot
+
+      # First run builds the import cache; it is expected to be noisy.
+      - name: Import project
+        run: godot --headless --path godot --import || true
+
+      # The same script contributors run locally, so a green run here means the
+      # same thing it means on their machine.
+      - name: Run checks
+        run: bash godot/tests/run_tests.sh
+
+  render:
+    name: Render checks
+    runs-on: ubuntu-latest
+    # Software rendering 39 demos is slow; fail rather than hang the queue.
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Godot and a software renderer
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq xvfb libgl1 mesa-utils
+          wget -q "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q "Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          sudo mv "Godot_v${GODOT_VERSION}-stable_linux.x86_64" /usr/local/bin/godot
+          sudo chmod +x /usr/local/bin/godot
+
+      - name: Import project
+        run: godot --headless --path godot --import || true
+
+      # Checks every demo draws something rather than a flat colour. Needs a
+      # real driver: --headless draws nothing, so this would pass on a
+      # completely broken project.
+      #
+      # Golden comparison does NOT run here. Software rendering does not produce
+      # the same pixels as a GPU, so goldens captured on a workstation would
+      # fail for reasons that have nothing to do with the change under test.
+      - name: Run render checks
+        env:
+          LIBGL_ALWAYS_SOFTWARE: "1"
+        run: xvfb-run -a godot --path godot --rendering-driver opengl3 --script res://tests/render_checks.gd
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: render-checks
+          path: ~/.local/share/godot/app_userdata/*/render_checks/
+          if-no-files-found: warn

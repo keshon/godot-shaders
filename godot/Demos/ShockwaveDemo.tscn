@@ -68,6 +68,8 @@ shockwave_duration = 0.75
 mask_path = NodePath("../Mask/SubViewport/Mask")
 
 [node name="SubViewport" type="SubViewport" parent="DemoView"]
+msaa_3d = 2
+positional_shadow_atlas_size = 8192
 handle_input_locally = false
 size = Vector2i(1920, 1080)
 render_target_update_mode = 4
@@ -76,7 +78,6 @@ render_target_update_mode = 4
 
 [node name="Demo3DEnvironment" parent="DemoView/SubViewport" instance=ExtResource("6")]
 
-[node name="Tween" type="Tween" parent="DemoView"]
 _import_path = NodePath("")
 unique_name_in_owner = false
 process_mode = 0
@@ -97,6 +98,8 @@ mouse_filter = 2
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="Mask"]
+msaa_3d = 2
+positional_shadow_atlas_size = 8192
 handle_input_locally = false
 size = Vector2i(1920, 1080)
 render_target_update_mode = 4

@@ -80,6 +80,7 @@ color_ramp = ExtResource("4")
 script = ExtResource("8")
 
 [node name="Fire" type="GPUParticles3D" parent="."]
+local_coords = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.26708, 0)
 material_override = SubResource("1")
 cast_shadow = 0
@@ -94,6 +95,7 @@ light_color = Color(1, 0.901961, 0.560784, 1)
 light_energy = 2.0
 
 [node name="BlueFire" type="GPUParticles3D" parent="."]
+local_coords = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.78327, 1.26708, 0)
 material_override = SubResource("1")
 cast_shadow = 0
@@ -108,6 +110,7 @@ light_color = Color(0.560784, 0.752941, 1, 1)
 light_energy = 2.0
 
 [node name="GreenFire" type="GPUParticles3D" parent="."]
+local_coords = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.66113, 1.26708, 0)
 material_override = SubResource("1")
 cast_shadow = 0

@@ -40,15 +40,13 @@ var vertex_end_positions := []
 var culled_indices := []
 var indices := []
 
-@onready var _tween: Tween = $Tween
-
 
 func setup(cube: MeshInstance3D, camera: Camera3D) -> void:
 	var x := 50.0
 	var y := 60.0
 
 	_extract_end_positions(cube, camera)
-	
+
 	for label_text in data:
 		var vertex := Vertex.instantiate()
 		add_child(vertex)
@@ -69,15 +67,15 @@ func setup(cube: MeshInstance3D, camera: Camera3D) -> void:
 
 
 func animate() -> void:
-	await animate_vertices().completed
+	await animate_vertices()
 	remove_labels()
 
 
 func remove_labels() -> void:
+	var tween := create_tween().set_parallel(true)
 	for l in labels:
-		_tween.interpolate_property(l, "modulate", Color.WHITE, Color.TRANSPARENT, 1)
-	_tween.start()
-	await _tween.tween_all_completed
+		tween.tween_property(l, "modulate", Color.TRANSPARENT, 1.0).from(Color.WHITE)
+	await tween.finished
 	for l in labels:
 		l.queue_free()
 
@@ -85,18 +83,18 @@ func remove_labels() -> void:
 func animate_vertices() -> void:
 	var anim_time := 0.5
 	for i in range(0, indices.size(), 3):
-		for indice in indices.slice(i, i+2):
-			_tween.interpolate_property(
-				vertices[indice],
-				"position",
-				vertices[indice].position,
-				vertex_end_positions[indice],
-				anim_time,
-				Tween.TRANS_SINE,
-				2
-			)
-		_tween.start()
-		await _tween.tween_all_completed
+		var tween := create_tween().set_parallel(true)
+		# Godot 4's Array.slice() end is exclusive; Godot 3's was inclusive, so
+		# this still covers the three indices of one triangle.
+		for indice in indices.slice(i, i + 3):
+			(tween.tween_property(
+					vertices[indice],
+					"position",
+					vertex_end_positions[indice],
+					anim_time)
+					.set_trans(Tween.TRANS_SINE)
+					.set_ease(Tween.EASE_IN_OUT))
+		await tween.finished
 		await get_tree().create_timer(anim_time).timeout
 		if i == 6:
 			anim_time = 0.3
@@ -105,15 +103,13 @@ func animate_vertices() -> void:
 
 
 func do_cull() -> void:
+	var tween := create_tween().set_parallel(true)
 	for indice in culled_indices:
-		_tween.interpolate_property(
-			vertices[indice], "modulate", Color.WHITE, Color.RED, 1
-		)
-		_tween.interpolate_property(
-			vertices[indice], "modulate", Color.RED, Color.TRANSPARENT, 1, Tween.TRANS_LINEAR, 2, 1
-		)
-	_tween.start()
-	await _tween.tween_all_completed
+		tween.tween_property(vertices[indice], "modulate", Color.RED, 1.0).from(Color.WHITE)
+		(tween.tween_property(vertices[indice], "modulate", Color.TRANSPARENT, 1.0)
+				.from(Color.RED)
+				.set_delay(1.0))
+	await tween.finished
 
 
 func _extract_end_positions(mesh_instance: MeshInstance3D, camera: Camera3D) -> void:

@@ -160,7 +160,7 @@ tracks/4/keys = {
 tracks/5/type = "bezier"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("PinkPotionAnchor/PotionPink/potionLarge_red/potionLarge_red001:material_override:shader_param/liquid_height")
+tracks/5/path = NodePath("PinkPotionAnchor/PotionPink/potionLarge_red/potionLarge_red_001:material_override:shader_parameter/liquid_height")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -283,6 +283,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_gc6tk")
 [node name="potionLarge_red_001" parent="PotionBlue/potionLarge_red" index="0"]
 material_override = SubResource("ShaderMaterial_a1awt")
 script = ExtResource("5_guj11")
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.25064e-05, 0.444676, -2.72244e-05 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

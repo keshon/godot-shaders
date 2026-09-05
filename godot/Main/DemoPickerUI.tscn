@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bjmid3jo8m8n1"]
+[gd_scene load_steps=25 format=3 uid="uid://bjmid3jo8m8n1"]
 
 [ext_resource type="PackedScene" uid="uid://b176ml0gceo5m" path="res://Main/DemoList.tscn" id="2"]
 [ext_resource type="Script" path="res://Main/DemoPickerUI.gd" id="3"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://cngfer2cd5fkd" path="res://Main/UI/node-icons/Control.svg" id="9_tkvaf"]
 [ext_resource type="Texture2D" uid="uid://btj70s4v4l2n3" path="res://Main/UI/node-icons/Node.svg" id="10_6gayy"]
 [ext_resource type="PackedScene" uid="uid://dd7qh25r60ptt" path="res://Main/UIControlsList.tscn" id="17"]
+[ext_resource type="ButtonGroup" path="res://Main/filter_button_group.tres" id="filter_group"]
 
 [sub_resource type="StyleBoxFlat" id="2"]
 draw_center = false
@@ -95,6 +96,8 @@ theme_override_styles/hover = SubResource("1")
 theme_override_styles/pressed = SubResource("1")
 theme_override_styles/normal = SubResource("1")
 toggle_mode = true
+button_group = ExtResource("filter_group")
+button_pressed = true
 text = "ALL"
 icon = ExtResource("6_aj65i")
 flat = true
@@ -113,6 +116,7 @@ theme_override_styles/hover = SubResource("1")
 theme_override_styles/pressed = SubResource("1")
 theme_override_styles/normal = SubResource("1")
 toggle_mode = true
+button_group = ExtResource("filter_group")
 text = "2D"
 icon = ExtResource("7_wv5qu")
 flat = true
@@ -131,6 +135,7 @@ theme_override_styles/hover = SubResource("1")
 theme_override_styles/pressed = SubResource("1")
 theme_override_styles/normal = SubResource("1")
 toggle_mode = true
+button_group = ExtResource("filter_group")
 text = "3D"
 icon = ExtResource("8_uthbi")
 flat = true
@@ -149,6 +154,7 @@ theme_override_styles/hover = SubResource("1")
 theme_override_styles/pressed = SubResource("1")
 theme_override_styles/normal = SubResource("1")
 toggle_mode = true
+button_group = ExtResource("filter_group")
 text = "UI"
 icon = ExtResource("9_tkvaf")
 flat = true
@@ -167,6 +173,7 @@ theme_override_styles/hover = SubResource("1")
 theme_override_styles/pressed = SubResource("1")
 theme_override_styles/normal = SubResource("1")
 toggle_mode = true
+button_group = ExtResource("filter_group")
 text = "GENERAL"
 icon = ExtResource("10_6gayy")
 flat = true

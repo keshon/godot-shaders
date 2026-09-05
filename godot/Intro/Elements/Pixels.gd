@@ -181,7 +181,9 @@ func _ready() -> void:
 func do_render() -> void:
 	var delay := 0.0
 	for i in range(0, get_child_count(), 8):
-		for pixel in get_children().slice(i, i+7):
+		# Godot 4's Array.slice() end is exclusive; Godot 3's was inclusive, so
+		# this still takes eight pixels per batch.
+		for pixel in get_children().slice(i, i + 8):
 			pixel.do_scale_down(delay)
 		delay += 0.15
 	await get_tree().create_timer(delay).timeout

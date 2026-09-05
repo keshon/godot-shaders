@@ -4,7 +4,7 @@ advancedtoondemo,"This advanced toon shader gives fine control over specular, an
 blurviewportcontainersdemo,"Uses ViewportContainers to compose a scene that uses Gaussian blur as motion blur. The ship is in a separate viewport, so it's not affected by the motion blur."
 blurviewporttexturesdemo,Uses TextureRects to compose a scene that uses Gaussian blur as motion blur. It's an alternative setup to produce a result like BlurViewportContainers.
 clouds2ddemo,Use noise and texture scrolling to add shadows cast by overhead clouds to your world.
-crystaldemo,We converted a SpatialMaterial to a shader to add a TIME-based pulse effect to its emission and fresnel.
+crystalsdemo,We converted a SpatialMaterial to a shader to add a TIME-based pulse effect to its emission and fresnel.
 dissolve2ddemo,"We use a Noise mask to dissolve a sprite and generate a mask used to set the emission points array of a CPUParticles2D. To generate the particles mask, we scale down the dissolve mask in ScaledView and loop over that texture's pixels in GDScript."
 dissolve3ddemo,We use a noise mask to make a 3D object dissolve by reducing the alpha channel of the Mesh according to the shape of the noise texture.
 environmentglowdemo,We can create a glow effect on 2D objects with a built-in WorldEnvironment node rather than creating a solution with shaders.
@@ -19,7 +19,7 @@ outline2ddemo,"Shaders are excellent for the not-so-easy task of outlining 2D sp
 outline3ddemo,"Shaders can also outline 3D objects with precise control. We draw the meshes a second time, but bigger, and invert the culling to draw behind the object. We use two methods here, notice how each has different limitations."
 paletteswap2ddemo,"Shaders are excellent at simple recoloring tasks. Our sprite is made grayscale, and we use the shade of gray to select colors from a palette. We can even support multiple color palettes, selecting them with a palette_index parameter."
 particlebridgedemo,Particles can be shaders too! This demo shows how to communicate between a particle and material shader for complex effects with many moving parts.
-pixelperfectoutlinedemo,"By drawing our outline in clip space instead of vertex space, we can make it remain at a constant size regardless of the distance from the camera or the scale. Excellent for user interfaces, object highlights, and technical drawings."
+pixelperfectoutline3ddemo,"By drawing our outline in clip space instead of vertex space, we can make it remain at a constant size regardless of the distance from the camera or the scale. Excellent for user interfaces, object highlights, and technical drawings."
 pointilismdemo,You can achieve a pointillism or dithering effect by turning the color from your viewport into grayscale and using the step function.
 prebakedglowdemo,We can use a shader on a premade sprite to create a glow effect. The sprite's texture needs some glow built-in for us to manipulate the alpha and color intensity.
 reflection2ddemo,Our Vertical mirror shader fades a reflection of the screen texture into a background color. A gradient texture controls the rate the reflection disappears.
@@ -31,7 +31,7 @@ stylizedfiredemo,We made this stylized fire shader using a particle system with 
 stylizedliquiddemo,We made this stylized liquid in a bottle using a custom wobble shader and script that informs the liquid shader when movement happens. Note: you should place the origin of the liquid mesh roughly in the center.
 stylizedwaterfalldemo,"This demo shows how to create a stylized waterfall. We created the flowing water without flowmaps by leveraging UVs and vertex colors created in Blender."
 texturemixdemo,"This shader mixes albedo and normal map textures based on different parameters. Such as vertex color, ambient occlusion, and world space normal. "
-unlitdirectionaltintdemo,"An unlit shader that tints the model depending on the world normal. The unlit tint shader is on the left, and the regular shader with albedo on the right."
+unlitdirectionaltint,"An unlit shader that tints the model depending on the world normal. The unlit tint shader is on the left, and the regular shader with albedo on the right."
 water2ddemo,"The top-down 2D water shader. The diffuse color texture has no light information. The shader calculates the shadows, and you can use the modulate property to tint it."
 water3ddemo,The water shader uses the depth and color buffer to cause a stylized refraction effect. The shader highlights intersections with foam using the depth buffer.
 watersidescroll2ddemo,"This side-scrolling water shader builds on the Reflection2DDemo. There is a hidden, simplified Water2DSideSimple node to help you understand the basics."
